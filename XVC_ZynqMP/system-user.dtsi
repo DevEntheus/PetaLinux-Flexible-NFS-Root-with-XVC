@@ -1,0 +1,17 @@
+/include/ "system-conf.dtsi"
+/ {
+};
+
+&sdhci0 {
+       no-1-8-v;
+       disable-wp;
+};
+
+&sdhci1 {
+       no-1-8-v;
+       disable-wp;
+};
+
+&debug_bridge_0 {
+        compatible = "xlnx,xvc";
+};
