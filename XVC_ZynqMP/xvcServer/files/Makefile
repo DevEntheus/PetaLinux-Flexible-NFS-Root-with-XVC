@@ -1,7 +1,7 @@
-APP = xvcServer
+APP = xvcserver
 
 # Add any other object files to this list below
-APP_OBJS = xvcServer.o
+APP_OBJS = xvcserver.o
 
 all: build
 

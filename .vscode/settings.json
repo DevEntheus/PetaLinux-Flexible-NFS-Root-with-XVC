@@ -1,8 +1,28 @@
 {
     "cSpell.words": [
+        "bindir",
+        "bootable",
+        "bootargs",
+        "BSCAN",
+        "CHKSUM",
+        "dtsi",
+        "exportfs",
+        "fsbl",
+        "JTAG",
         "nfsroot",
+        "nfsvers",
         "nogroup",
+        "objs",
+        "plnx",
+        "pmufw",
+        "rptserver",
+        "runmake",
+        "sdhci",
+        "showmount",
         "tftpboot",
-        "tftpd"
+        "tftpd",
+        "WORKDIR",
+        "xvcserver",
+        "zynqmp"
     ]
 }

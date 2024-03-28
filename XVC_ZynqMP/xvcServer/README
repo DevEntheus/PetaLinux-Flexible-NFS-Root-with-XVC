@@ -4,7 +4,7 @@ PetaLinux User Application Template
 This directory contains a PetaLinux user application created from a template.
 
 If you are developing your application from scratch, simply start editing the
-file xvcServer.c.
+file xvcserver.c.
 
 You can easily import any existing application code by copying it into this 
 directory, and editing the automatically generated Makefile.
@@ -14,7 +14,7 @@ from PetaLinux menuconfig by running:
     "petalinux-config -c rootfs"
 You will see your application in the "apps --->" submenu.
 
-To build your application, simply run "petalinux-build -c xvcServer".
+To build your application, simply run "petalinux-build -c xvcserver".
 This command will build your application and will install your application
 into the target file system host copy.
 
