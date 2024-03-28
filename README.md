@@ -403,7 +403,7 @@ Change the SRC_URI BitBake variable in the **project-spec/meta-user/recipes-apps
 ```BitBake
 SRC_URI = "file://xvcserver.c \
            file://xvc_ioctl.h \
-	       file://Makefile \
+           file://Makefile \
           "
 ```
 also add the following lines:
