@@ -432,11 +432,11 @@ Copy the following files: **rptserver.c**, **gpio.c**, **mmio.c**, **mmio.h** an
 Change the SRC_URI BitBake variable in the **project-spec/meta-user/recipes-apps/rptserver/rptserver.bb** recipe file (in folder [XVC_ZynqMP/rptserver](XVC_ZynqMP/rptserver/files) all files already modified) to:
 ```BitBake
 SRC_URI = "file://Makefile \
-	       file://rptserver.c \
-	       file://gpio.c \
-	       file://mmio.c \
-	       file://mmio.h \
-	      "
+           file://rptserver.c \
+           file://gpio.c \
+           file://mmio.c \
+           file://mmio.h \
+          "
 ```
 Check if the rptserver application is enabled in the configuration in:
 ```bash
