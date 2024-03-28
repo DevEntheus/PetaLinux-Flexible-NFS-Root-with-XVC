@@ -1,8 +1,7 @@
 # PetaLinux Flexible NFS Root with XVC
 
 1. [Introduction](#introduction)
-2. [Overview](#overview)
-3. [Prerequisites](#prerequisites)
+2. [Prerequisites](#prerequisites)
     * [TFTP Server](#tftp-server)
         * [Install TFTP Server](#install-tftp-server)
         * [Create TFTP Root Directory](#create-tftp-root-directory)
@@ -30,7 +29,7 @@
         * [Block Design Example](#block-design-example)
         * [Debug Bridge Configuration](#debug-bridge-configuration)
         * [System ILA Configuration](#system-ila-configuration)
-4. [PetaLinux Project](#petalinux-project)
+3. [PetaLinux Project](#petalinux-project)
     * [Requirements](#requirements)
     * [Create a PetaLinux Project](#create-a-petalinux-project)
         * [Device Tree Configuration](#device-tree-configuration)
@@ -42,23 +41,53 @@
     * [Create Application](#create-application)
         * [Setup XVC Server](#setup-xvc-server)
         * [Setup RPT Server (optional)](#setup-rpt-server-optional)
-5. [Prepare SD Card](#prepare-sd-card)
-6. [Prepare NFS Root](#prepare-nfs-root)
-7. [The First Boot](#the-first-boot)
+4. [Prepare SD Card](#prepare-sd-card)
+5. [Prepare NFS Root](#prepare-nfs-root)
+6. [The First Boot](#the-first-boot)
     * [U-Boot CLI](#u-boot-cli)
         * [Setup Environment Variables](#setup-environment-variables)
-8. [Starting the Software](#starting-the-software)
+7. [Starting the Software](#starting-the-software)
     * [Start XVC Driver](#start-xvc-driver)
     * [Start XVC Server](#start-xvc-server)
     * [Start RPT Server (optional)](#start-rpt-server-optional)
 
-9. [Hardware Manager](#hardware-manager)
+8. [Hardware Manager](#hardware-manager)
     * [Hardware Targets](#hardware-targets)
     * [Hardware ILA](#hardware-ila)    
 
 ## Introduction
+**Overview of the Project: Configuring PetaLinux with NFS Root File System and XVC**
 
-## Overview
+Embedded systems landscape, the seamless integration of hardware and software components is vital for efficient development and deployment. This project aims to streamline the process by configuring a PetaLinux system with an NFS (Network File System) root file system and integrating XVC (Xilinx Virtual Cable) for remote debugging capabilities. Below is an overview of the project's key components and objectives:
+
+**NFS Root File System:**
+
+* Purpose: NFS serves as a distributed file system protocol, enabling network-based access to files and directories.
+* Objective: To set up a PetaLinux system with NFS as the root file system, providing centralized storage and simplified maintenance.
+* Benefits: Centralized management, easy updates, and the ability to boot embedded devices directly from a network-shared file system.
+
+**XVC (Xilinx Virtual Cable):**
+
+* Purpose: XVC facilitates remote debugging and monitoring of FPGA or SoC devices without the need for physical JTAG cables.
+* Objective: Integration of XVC into the PetaLinux project to enable remote debugging capabilities.
+* Benefits: Flexible debugging workflows, real-time monitoring of internal signals, and enhanced efficiency in hardware-software co-design.
+
+**Project Setup Steps:**
+
+* TFTP and NFS Server Configuration: Installation and configuration of TFTP and NFS servers to facilitate file sharing and system booting.
+* NFS Root File System Preparation: Creation of a robust NFS root file system with proper permissions and configurations for seamless access.
+* XVC Integration: Incorporation of XVC driver and server components into the PetaLinux project for remote debugging purposes.
+* Hardware Configuration: Setup of debug bridges and ILA cores within the hardware design for real-time monitoring and debugging capabilities.
+
+**Objectives:**
+
+* Establishing a comprehensive development environment conducive to efficient hardware-software co-design and debugging processes.
+* Enabling remote debugging capabilities through the integration of XVC, enhancing flexibility and scalability in the development workflow.
+* Streamlining file system management and access by configuring NFS as the root file system, promoting centralized storage and simplified maintenance.
+
+**Conclusion:**
+
+* By following the outlined steps and configurations, can create a robust PetaLinux environment with NFS as the root file system and integrated XVC for remote debugging. This setup empowers with enhanced flexibility, scalability, and efficiency in designing and debugging FPGA or SoC-based applications, ultimately accelerating the development cycle and improving overall productivity.
 
 ## Prerequisites
 ### TFTP Server
@@ -532,7 +561,7 @@ sudo rptserver
 ## Hardware Manager
 ### Hardware Targets
 The Hardware Manager is used to manage the hardware targets in the Vivado Design Suite. The Hardware Manager allows you to program and debug the hardware design on the FPGA device.
-Open Hardware Manager --> Open Target --> Open Hardware Target --> Hardware Server Settings --> Connect to: Local Server --> Select Hardware Target --> Add Xilinx Virtual Cable (XVC) --> Host name: <NFS Server IP> --> Port: 2542 --> OK --> Finish
+Open Hardware Manager --> Open Target --> Open Hardware Target --> Hardware Server Settings --> Connect to: Local Server --> Select Hardware Target --> Add Xilinx Virtual Cable (XVC) --> Host name: <NFS_Server_IP> --> Port: 2542 --> OK --> Finish
 ![Hardware Target](Images/hw_target.jpg "Hardware Target")
 ### Hardware ILA
 The Hardware Integrated Logic Analyzer (ILA) is a debug core that allows you to monitor internal signals in design in real-time. The ILA core is used to capture signals in the design and display them in the Vivado Logic Analyzer. Configure the ILA according to the block design example.
