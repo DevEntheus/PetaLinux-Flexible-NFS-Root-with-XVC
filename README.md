@@ -16,7 +16,7 @@
         * [Install NFS Server](#install-nfs-server)
         * [Create NFS Root Directory](#create-nfs-root-directory)
             * [Set Permissions](#set-permissions)
-        * [Export NFS Root (important)](#export-nfs-root-important)
+        * [Export NFS Root (***important***)](#export-nfs-root-important)
         * [Restart NFS Server](#restart-nfs-server)
         * [Add rules to the firewall](#add-rules-to-the-firewall)
             * [Enable the firewall](#enable-the-firewall)
@@ -61,6 +61,8 @@
 
 ## Prerequisites
 ### TFTP Server
+<hr>
+
 #### Install TFTP Server
 To install the TFTP server, run the following commands:
 ```bash
@@ -110,25 +112,115 @@ To start the TFTP server on boot, run the following command:
 ```bash
 sudo systemctl enable tftpd-hpa
 ```
-
 ### NFS Server
+___
+#### Install NFS Server
+To install the NFS server, run the following command:
+```bash
+sudo apt update
+sudo apt install nfs-kernel-server
+```
+#### Create NFS Root Directory
+Create a directory for the NFS server with the following command:
+```bash
+sudo mkdir /tftpboot/nfsroot
+```
+#### Set Permissions
+Change the directory’s permissions with the following commands:
+```bash
+sudo chown nobody:nogroup /tftpboot/nfsroot
+sudo chmod 777 /tftpboot/nfsroot
+```
+#### Export NFS Root (***important***)
+Edit the NFS server configuration file with the following command:
+```bash
+sudo nano /etc/exports
+```
+Add the following line(s) to the configuration file:
+```bash
+/tftpboot/nfsroot 192.168.1.0/24(rw,sync,no_subtree_check,no_root_squash)
+```
+* **/tftpboot/nfsroot** - The directory to export
+* **192.168.1.0/24** - The IP address range that can access the NFS share
+* **rw** - Read/Write access
+* **sync** - Synchronous writes
+* **no_subtree_check** - Disable subtree checking
+* **no_root_squash** - Disable root squashing
+
+Save the file and exit (Ctrl + s, Ctrl + x) the editor. After changing the configuration file, make the export with the following command:
+```bash
+sudo exportfs -a
+```
+#### Restart NFS Server
+After changing the configuration file, restart the NFS server with the following command:
+```bash
+sudo systemctl restart nfs-kernel-server
+```
+#### Add rules to the firewall
+To add rules to the firewall, run the following commands:
+```bash
+sudo ufw allow from 192.168.1.0/24 to any port nfs
+```
+#### Enable the firewall
+To enable the firewall, run the following command:
+```bash
+sudo ufw enable
+```
+#### Firewall status
+To check the firewall status, run the following command:
+```bash
+sudo ufw status
+```
+#### Verify NFS Server
+To verify that the NFS server is running, run the following command:
+```bash
+sudo systemctl status nfs-kernel-server
+sudo showmount -e
+```
+### NFS Client
+___
+#### Install NFS Client
+To install the NFS client, run the following command:
+```bash
+sudo apt update
+sudo apt install nfs-common
+```
+#### Create NFS Mount Point
+Create a directory for the NFS mount point with the following command:
+```bash
+sudo mkdir ~/nfsroot_client
+```
+#### Mount NFS Share
+To mount the NFS share, run the following command:
+```bash
+sudo mount <NFS_Server_IP>:/tftpboot/nfsroot ~/nfsroot_client
+```
 ### Prepare the Hardware
+___
+Add to your hardware design the following IP cores:
+* **Debug Bridge**
+* **System ILA**
 #### Block Design Example
-<!-- ![Block design example](Images/bd.jpg "Block design example") -->
-
+![Block design example](Images/bd.jpg "Block design example")
 #### Debug Bridge Configuration
+For this project, the Debug Bridge type is configured as AXI to BSCAN. This bridge type is intended for designs that use Xilinx Virtual Cable (XVC) to remotely debug on FPGA or SoC device through Ethernet or other interfaces without the need for JTAG cable. In this mode, the Debug Bridge receives XVC Commands via AXI4-Lite interface.    
+![Debug bridge configuration](Images/debug_bridge.jpg "Debug bridge configuration")
 #### System ILA Configuration
-### Create a PetaLinux Project
-
+Configure the System ILA to capture the interfaces of interest. For this project, the System ILA is configured to capture the following interfaces (see example of block design above):
+![System ILA configuration](Images/system_ila.jpg "System ILA configuration")
 ## PetaLinux Project
 ### Create a PetaLinux Project
+___
 #### Device Tree Configuration
 ### PetaLinux Configuration
+___
 #### Root filesystem type
 #### Kernel configuration
 ### Create Kernel Module
+___
 #### Setup XVC Driver
 ### Create Application
+___
 #### Setup XVC Server
 #### Setup RPT Server (optional)
 
