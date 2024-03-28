@@ -35,6 +35,7 @@
     * [Create a PetaLinux Project](#create-a-petalinux-project)
         * [Device Tree Configuration](#device-tree-configuration)
     * [PetaLinux Configuration](#petalinux-configuration)
+        * [Root File System Configuration](#root-file-system-configuration)
         * [Kernel configuration](#kernel-configuration)
     * [Create Kernel Module](#create-kernel-module)
         * [Setup XVC Driver](#setup-xvc-driver)
@@ -43,7 +44,7 @@
         * [Setup RPT Server (optional)](#setup-rpt-server-optional)
 5. [Prepare SD Card](#prepare-sd-card)
 6. [Prepare NFS Root](#prepare-nfs-root)
-7. [First Boot](#first-boot)
+7. [The First Boot](#the-first-boot)
     * [U-Boot CLI](#u-boot-cli)
         * [Setup Environment Variables](#setup-environment-variables)
 8. [Starting the Software](#starting-the-software)
@@ -53,7 +54,7 @@
 
 9. [Hardware Manager](#hardware-manager)
     * [Hardware Targets](#hardware-targets)
-    * [System ILA](#system-ila)    
+    * [Hardware ILA](#hardware-ila)    
 
 ## Introduction
 
@@ -222,15 +223,15 @@ Add to your hardware design the following IP cores:
 * **Debug Bridge**
 * **System ILA**
 #### Block Design Example
-<!-- ![Block design example](Images/bd.jpg "Block design example") -->
+![Block design example](Images/bd.jpg "Block design example")
 
 #### Debug Bridge Configuration
 For this project, the Debug Bridge type is configured as AXI to BSCAN. This bridge type is intended for designs that use Xilinx Virtual Cable (XVC) to remotely debug on FPGA or SoC device through Ethernet or other interfaces without the need for JTAG cable. In this mode, the Debug Bridge receives XVC Commands via AXI4-Lite interface.    
-<!-- ![Debug bridge configuration](Images/debug_bridge.jpg "Debug bridge configuration") -->
+![Debug bridge configuration](Images/debug_bridge.jpg "Debug bridge configuration")
 
 #### System ILA Configuration
 Configure the System ILA to capture the interfaces of interest. For this project, the System ILA is configured to capture the following interfaces (see example of block design above):
-<!-- ![System ILA configuration](Images/system_ila.jpg "System ILA configuration") -->
+![System ILA configuration](Images/system_ila.jpg "System ILA configuration")
 ## PetaLinux Project
 ### Requirements
 * [PetaLinux Tools Documentation: Reference Guide (UG1144)
@@ -252,7 +253,7 @@ Add the following lines to the device tree file:
 / {
     chosen {
         bootargs = "console=ttyPS0,115200 root=/dev/nfs nfsroot=<NFS Server IP>:/tftpboot/nfsroot/plnx_rootfs,tcp,nfsvers=4 ip=dhcp rw";
-	}:
+    }:
 };
 
 &sdhci0 {
@@ -294,6 +295,14 @@ After the XSA file has been imported successfully, the PetaLinux system configur
 	[*] Copy final images to tftpboot
 	(/tftpboot) tftpboot directory --->
 	    /tftpboot	
+```
+
+#### Root File System Configuration
+At this stage, any packages, such as GCC, Python etc., or user packages like xvcserver, rptserver, can be added to the project if necessary.
+
+To configure the root file system, run the following command:
+```bash
+petalinux-config -c rootfs
 ```
 
 #### Kernel configuration
@@ -409,36 +418,123 @@ To build rptserver application, run the following command:
 ```bash
 petalinux-build -c rptserver
 ```
-Also need to rebuild PetaLinux bootable images run this command:
+Also, it is necessary to rebuild PetaLinux bootable images. To do this, run the following:
 ```bash
 petalinux-build -c rootfs
 ```
+
 Then, build the PetaLinux project with the following command:
 ```bash
 petalinux-build
 ```
-### Packaging a Petalinux Project
+#### Packaging a Petalinux Project
 After the project is built, the project is packaged with the following command:
 ```bash
 petalinux-package --boot --format BIN --fsbl images/linux/zynqmp_fsbl.elf --u-boot images/linux/u-boot.elf --pmufw images/linux/pmufw.elf --fpga images/linux/system.bit --force
 ```
-
-
+After the project has been built and packaged successfully, all files will be located in the **<Project_Name>/images/linux** directory. Also, all files will be copied to **/tftpboot** directory.
 
 ## Prepare SD Card
+Format SD card with FAT32 file system and copy from **<Project_Name>/images/linux** directory to the root of the SD card follow files:
+* **BOOT.BIN**
+* **boot.scr**
+* **image.ub**
 
 ## Prepare NFS Root
+With **NFS** Root File System Type it is possible to use several Root File Systems that can be selected in the bootloading process. ***See The First Boot***.
 
-## First Boot
+For example, to use a **PetaLinux** root file system created for this project with **XVC (Xilinx Virtual Cable)**, follow the steps below:
+
+* Create a directory for the root file system with the following command:
+    ```bash
+    sudo mkdir /tftpboot/nfsroot/plnx_rootfs
+    ```
+* Extract the root file system with the following command:
+    ```bash
+    sudo tar -xvf <Project_Name>/images/linux/rootfs.tar.gz -C /tftpboot/nfsroot/plnx_rootfs
+    ```
+
+Or **"ArchLinuxARM aarch64"** root file system can be used with the following steps:
+
+* Download the latest Arch Linux ARM to the home directory:
+    ```bash
+    wget http://os.archlinuxarm.org/os/ArchLinuxARM-aarch64-latest.tar.gz
+    ```
+* Create a directory for the root file system with the following command:
+    ```bash
+    sudo mkdir /tftpboot/nfsroot/arch_rootfs
+    ```
+* Extract the root file system with the following command:
+    ```bash
+    sudo tar -xvf ArchLinuxARM-aarch64-latest.tar.gz -C /tftpboot/nfsroot/arch_rootfs
+    ```
+
+## The First Boot
+After the SD card is prepared and the NFS root is set up, insert the SD card into the board and power it on. The board will boot from the SD card and load the root file system from the NFS server.
+
+Also, if during the boot process hit any key to stop autoboot, the U-Boot command line interface (CLI) will be displayed on the terminal. The U-Boot CLI can be used to set up the environment variables for the NFS boot.
+
 ### U-Boot CLI
+U-Boot CLI can be used to set up the environment variables for the NFS boot. To help using the U-Boot CLI, the following commands can be used:
+```
+help
+```
+
 #### Setup Environment Variables
+To set up the environment variables for the PetaLinux root file system, use the following commands:
+```
+setenv bootargs console=ttyPS0,115200 root=/dev/nfs nfsroot=192.168.1.39:/tftpboot/nfsroot/plnx-rootfs,tcp,nfsvers=4 ip=dhcp rw
+```
+Or set up the environment variables for the Arch Linux ARM root file system:
+```
+setenv bootargs console=ttyPS0,115200 root=/dev/nfs nfsroot=192.168.1.39:/tftpboot/nfsroot/alarm-rootfs,tcp,nfsvers=4 ip=dhcp rw
+```
+Save the environment variables with the following command:
+```
+saveenv
+```
+To verify that the environment variables has been set, use the following command:
+```
+printenv
+```
+After saving the environment variables, boot the device with the following command:
+```
+boot
+```
+Or reset the device with the following command:
+```
+reset
+```
+If it is necessary to load a different root file system, reboot the device and hit any key to stop autoboot. Then, use the following commands to set up the environment variables for the Arch Linux ARM root file system:
+```bash
+setenv bootargs console=ttyPS0,115200 root=/dev/nfs nfsroot=<NFS_Server_IP>:<Path_to_RootFS>,tcp,nfsvers=4 ip=dhcp rw
+```
 
 ## Starting the Software
 ### Start XVC Driver
+Use the following command to start the XVC driver:
+```bash
+sudo modprobe xvc-driver
+```
+
 ### Start XVC Server
+Use the following command to start the XVC server:
+```bash
+sudo xvcserver &
+```
+
 ### Start RPT Server (optional)
+Use the following command to start the RPT server:
+```bash
+sudo rptserver
+```
 
 ## Hardware Manager
 ### Hardware Targets
-### System ILA
+The Hardware Manager is used to manage the hardware targets in the Vivado Design Suite. The Hardware Manager allows you to program and debug the hardware design on the FPGA device.
+Open Hardware Manager --> Open Target --> Open Hardware Target --> Hardware Server Settings --> Connect to: Local Server --> Select Hardware Target --> Add Xilinx Virtual Cable (XVC) --> Host name: <NFS Server IP> --> Port: 2542 --> OK --> Finish
+![Hardware Target](Images/hw_target.jpg "Hardware Target")
+### Hardware ILA
+The Hardware Integrated Logic Analyzer (ILA) is a debug core that allows you to monitor internal signals in design in real-time. The ILA core is used to capture signals in the design and display them in the Vivado Logic Analyzer. Configure the ILA according to the block design example.
+![Hardware ILA](Images/ila.jpg "Hardware ILA")
 
