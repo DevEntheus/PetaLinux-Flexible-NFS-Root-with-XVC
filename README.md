@@ -97,6 +97,8 @@ TFTP (Trivial File Transfer Protocol) is a simple protocol used for transferring
 To install the TFTP server, run the following commands:
 ```bash
 sudo apt update
+```
+```bash
 sudo apt install tftpd-hpa
 ```
 
@@ -110,6 +112,8 @@ sudo mkdir /tftpboot
 Change the directory’s permissions with the following commands:
 ```bash
 sudo chown nobody:nogroup /tftpboot
+``` 
+```bash
 sudo chmod 777 /tftpboot
 ```
 
@@ -119,7 +123,7 @@ Edit the TFTP server configuration file with the following command:
 sudo nano /etc/default/tftpd-hpa
 ```
 If necessary, change the following lines:
-```bash
+```text
 TFTP_USERNAME="tftp"
 TFTP_DIRECTORY="/tftpboot"
 TFTP_ADDRESS="0.0.0.0:69"
@@ -157,6 +161,8 @@ Network File System (NFS) is a distributed file system protocol allowing a user 
 To install the NFS server, run the following command:
 ```bash
 sudo apt update
+```
+```bash
 sudo apt install nfs-kernel-server
 ```
 
@@ -170,6 +176,8 @@ sudo mkdir /tftpboot/nfsroot
 Change the directory’s permissions with the following commands:
 ```bash
 sudo chown nobody:nogroup /tftpboot/nfsroot
+``` 
+```bash
 sudo chmod 777 /tftpboot/nfsroot
 ```
 
@@ -222,6 +230,8 @@ sudo ufw status
 To verify that the NFS server is running, run the following command:
 ```bash
 sudo systemctl status nfs-kernel-server
+```
+```bash
 sudo showmount -e
 ```
 
@@ -232,6 +242,8 @@ To access files shared by an NFS server from a client machine, you need to set u
 To install the NFS client, run the following command:
 ```bash
 sudo apt update
+```
+```bash
 sudo apt install nfs-common
 ```
 
@@ -272,6 +284,8 @@ Configure the System ILA to capture the interfaces of interest. For this project
 An empty project is created with the following command:
 ```bash
 petalinux-create --type project --template zynqMP --name <project name>
+```
+```bash
 cd <project name>
 ```
 
@@ -282,7 +296,7 @@ Add the following lines to the device tree file:
 / {
     chosen {
         bootargs = "console=ttyPS0,115200 root=/dev/nfs nfsroot=<NFS Server IP>:/tftpboot/nfsroot/plnx_rootfs,tcp,nfsvers=4 ip=dhcp rw";
-    }:
+    };
 };
 
 &sdhci0 {
@@ -373,21 +387,23 @@ Add the following line to the **xvc_driver.h** file (in folder [XVC_ZynqMP/xvc-d
 ```
 Before building the module, configure the root file system with the following command:
 ```bash
-    petalinux-config -c rootfs
+petalinux-config -c rootfs
 ```
 Check if the module is enabled in the configuration in:
 ```bash
-    user packages ---> 
-        [*] xvc-driver
+user packages ---> 
+    [*] xvc-driver
 ```
 To compile and install module run following commands:
 ```bash
-    petalinux-build -c kernel
-    petalinux-build -c xvc-driver
+petalinux-build -c kernel
+``` 
+```bash
+petalinux-build -c xvc-driver
 ```
 Also need to rebuild PetaLinux bootable images run this command:
 ```bash
-    petalinux-build -c rootfs
+petalinux-build -c rootfs
 ```
 
 ### Create Application
