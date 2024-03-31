@@ -1,0 +1,3 @@
+# [Download](https://www.xilinx.com/member/forms/download/xef.html?filename=petalinux-v2023.2-10121855-installer.run) PetaLinux Tools - Installer - 2023.2  Full Product Installation
+## [PetaLinux Tools Download Page](https://www.xilinx.com/support/download/index.html/content/xilinx/en/downloadNav/embedded-design-tools.html)
+## [PetaLinux Tools Documentation: Reference Guide (UG1144)](https://www.xilinx.com/support/documentation/sw_manuals/xilinx2023_2/ug1144-petalinux-tools-reference-guide.pdf)
