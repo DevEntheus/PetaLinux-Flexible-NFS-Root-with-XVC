@@ -97,19 +97,19 @@ Embedded systems landscape, the seamless integration of hardware and software co
 * By following the outlined steps and configurations, can create a robust PetaLinux environment with NFS as the root file system and integrated XVC for remote debugging. This setup empowers with enhanced flexibility, scalability, and efficiency in designing and debugging FPGA or SoC-based applications, ultimately accelerating the development cycle and improving overall productivity.
 
 ## Overview
-The project aims to configure a PetaLinux system with an NFS root file system and integrate XVC for remote debugging capabilities of FPGA or SoC devices. 
+The project aims to configure a **PetaLinux system** with an **NFS root file system** and integrate **XVC** for remote debugging capabilities of **FPGA** or **SoC** devices. It involves creating a **Virtual Machine (VM) with Ubuntu 22.04.2 LTS**, installing and configuring **TFTP** and **NFS** servers, setting up **PetaLinux Tools 2023.2**, creating a **PetaLinux project**, preparing the block design using **Xilinx Vivado 2023.2.1**, configuring the root file system, integrating **XVC** for remote debugging, and preparing the **SD card** and **NFS root** for booting the system. Additionally, the project includes setting up **FPGA Manager** and **Hardware Manager** for configuring the bitstream and monitoring the hardware interfaces, aiming to streamline the development and debugging process by providing a flexible and efficient environment for hardware-software co-design and debugging workflows.
 
 ## Create Ubuntu 22.04.2 Virtual Machine (VM)
 ### Minimum requirements to run PetaLinux Tools 2023.2:
-* 8 GB RAM (recommended minimum for AMD tools)
-* 2 GHz CPU clock or equivalent (minimum of eight cores)
-* 100 GB free disk space
-* Ubuntu 22.04.2 LTS (64-bit) (latest version unsupported)
-* Internet connection
-* System shell /bin/bash or /bin/sh
+* **8 GB RAM** (recommended minimum for AMD tools)
+* **2 GHz CPU** clock or equivalent (minimum of eight cores)
+* **100 GB** free disk space
+* **Ubuntu 22.04.2 LTS (64-bit)** (latest version unsupported)
+* **Internet connection**
+* System shell **/bin/bash** or **/bin/sh**
 
 ### Install the required packages
-Before installing the PetaLinux Tools, ensure that the required packages are installed on the Ubuntu 22.04.2 VM. Change the system shell to /bin/bash or /bin/sh if necessary.
+Before installing the **PetaLinux Tools**, ensure that the required packages are installed on the **Ubuntu 22.04.2 VM**. Change the system shell to **/bin/bash** or **/bin/sh** if necessary.
 
 Check the current shell:
 ```bash
@@ -304,16 +304,92 @@ Configure the System ILA to capture the interfaces of interest. For this project
 Add the ILA Core to the Block Design, as shown in the Block ***Design Example***.
 ### Block Design Example
 ![Block design example](Images/bd.jpg "Block design example")
-
+After adding the Debug Bridge and System ILA to the Block Design, validate the design implementation and generate the bitstream.
+Export the hardware platform including the bitstream. Copy the hardware platform to the VM home directory.
 
 ## PetaLinux Project
 ### Create a PetaLinux Project
+Create a new PetaLinux project with the following command:
+```bash
+petalinux-create --type project --template zynqMP --name <project name>
+```
 ### Device Tree Configuration
+To use Debug Bridge, change the **system-user.dtsi** device tree at the end of the file of the PetaLinux project in **<plnx-proj-root>/project-spec/meta-user/recipes-bsp/device-tree/files** to change the compatible string to match that driver.
+```text
+&sdhci0 {
+       no-1-8-v;
+       disable-wp;
+};
+
+&sdhci1 {
+       no-1-8-v;
+       disable-wp;
+};
+
+&debug_bridge_0 {
+        compatible = "xlnx,xvc";
+};
+```
 ### Hardware Configuration
+Use the following command to import the hardware platform into the PetaLinux project:
+```bash
+petalinux-config --get-hw-description ~/<hardware_platform>.xsa
+```
+And configure as follows:
+```text
+-> Subsystem AUTO Hardware Settings  --->
+	Ethernet Settings  --->
+		[*] Randomise MAC address
+
+-> FPGA Manager --->
+	[*] Fpga Manager
+	
+-> Image Packaging Configuration --->
+	Root filesystem type (NFS) --->
+		(X) NFS
+	(/tftpboot/nfsroot) Location of NFS root directory --->
+		/tftpboot/nfsroot
+	[*] Copy final images to tftpboot
+	(/tftpboot) tftpboot directory --->
+	    /tftpboot
+```
+After configuring the hardware, save the configuration and exit the menu.
 ### Root File System Configuration
+To configure the root file system, run the following command:
+```bash
+petalinux-config -c rootfs
+```
+Configure the root file system as follows:
+```text
+-> Filesystem Packages --->
+    base ---> 
+        dnf --->
+            [*] dnf
+
+-> Image Features --->
+    [*] package-management
+
+-> PetaLinux RootFS Settings --->
+    (root:root;<username>:<pass>;) Add Extra Users --->
+        (root:root;<username>:<pass>)
+    (<username>:audio,video,aie,input;) Add Users to Groups
+        (<username>:audio,video,aie,input)
+    (vtuser) Add Users to Sudo users --->
+        (vtuser)    
+```
 ### Kernel configuration
+Check kernel Configuration in accordance with PetaLinux Tools Documentation: [PetaLinux Tools Documentation: Reference Guide "Configuring NFS Boot"](https://docs.amd.com/r/en-US/ug1144-petalinux-tools-reference-guide/Configuring-NFS-Boot) section.
 ### Build PetaLinux Project
+To build the PetaLinux project, run the following command:
+```bash
+petalinux-build
+```
 ### Packaging a Petalinux Project
+To package the PetaLinux project, run the following command:
+```bash
+petalinux-package --boot --format BIN --fsbl images/linux/zynqmp_fsbl.elf --u-boot images/linux/u-boot.elf --pmufw images/linux/pmufw.elf --fpga images/linux/system.bit --force
+```
+After packaging the project, all necessary files will be available in the **images/linux** directory also if **TFTP server** is configured correctly, the files will be copied to the **/tftpboot** directory.
 
 ## Xilinx Virtual Cable (XVC)
 ### Overview XVC
