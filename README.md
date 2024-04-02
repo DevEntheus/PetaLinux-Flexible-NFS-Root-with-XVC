@@ -23,7 +23,7 @@
  7. [Prepare Block Design (BD)](#prepare-block-design)
      * [Add to BD Debug Bridge](#add-to-bd-debug-bridge)
      * [Add to BD System ILA](#add-to-bd-system-ila)
- 7. [PetaLinux Project](#petalinux-project)
+ 8. [PetaLinux Project](#petalinux-project)
      * [Create a PetaLinux Project](#create-a-petalinux-project)
      * [Device Tree Configuration](#device-tree-configuration)
      * [Hardware Configuration](#hardware-configuration)
@@ -31,7 +31,7 @@
      * [Kernel configuration](#kernel-configuration)
      * [Build PetaLinux Project](#build-petalinux-project)
      * [Packaging a Petalinux Project](#packaging-a-petalinux-project)
- 8. [Xilinx Virtual Cable (XVC)](#xilinx-virtual-cable-xvc)
+ 9. [Xilinx Virtual Cable (XVC)](#xilinx-virtual-cable-xvc)
      * [Overview XVC](#overview-xvc)
      * [Hardware Configuration](#hardware-configuration)
      * [Edit Petalinux Project](#edit-petalinux-project)
@@ -39,27 +39,28 @@
      * [Create Application (xvcserver)](#create-application-xvcserver)
      * [Start XVC Driver](#start-xvc-driver)
      * [Start XVC Server](#start-xvc-server)
- 9. [Remote Peripheral Testing (RPT)](#remote-peripheral-testing-rpt)
+10. [Remote Peripheral Testing (RPT)](#remote-peripheral-testing-rpt)
      * [Overview RPT](#overview-rpt)
      * [Edit Petalinux Project](#edit-petalinux-project)
      * [Create Application (rptserver)](#create-application-rptserver)
      * [Start RPT Server](#start-rpt-server)
-10. [Prepare SD Card](#prepare-sd-card)
-11. [Prepare NFS Root](#prepare-nfs-root)
-12. [The First Boot](#the-first-boot)
+11. [Prepare SD Card](#prepare-sd-card)
+12. [Prepare NFS Root](#prepare-nfs-root)
+13. [The First Boot](#the-first-boot)
      * [U-Boot CLI](#u-boot-cli)
-13. [Setup Petalinux](#setup-petalinux)
+14. [Setup Petalinux](#setup-petalinux)
      * [Configure .bashrc](#configure-bashrc)
      * [DNF Update](#dnf-update)
      * [Install Conda](#install-conda)
      * [Create Conda Environment](#create-conda-environment)
      * [Install necessary packages](#install-necessary-packages)
-14. [Remote development with VS Code](#remote-development-with-vs-code)     
-15. [FPGA Manager](#fpga-manager)
-16. [Hardware Manager](#hardware-manager)
+15. [Remote development with VS Code](#remote-development-with-vs-code)     
+16. [FPGA Manager](#fpga-manager)
+17. [Hardware Manager](#hardware-manager)
      * [Hardware Targets](#hardware-targets)
      * [Hardware ILA](#hardware-ila)
 18. [Example of Block Design](#example-of-block-design)
+19. [Glossary](#glossary)
 
 
 ## Introduction
@@ -545,6 +546,7 @@ To prepare the **SD card**, follow the steps below:
     * ***BOOT.BIN***
     * ***boot.scr***
     * ***image.ub***
+
 ## Prepare NFS Root
 With **NFS Boot** it is possible to use several **Root File Systems** that can be selected in the bootloading process. ***[See The First Boot](#the-first-boot)***.
 
@@ -570,6 +572,7 @@ Or for example **ArchLinuxARM aarch64 root file system** can be used with the fo
     ```bash
     sudo tar -xfvp ~/ArchLinuxARM-aarch64-latest.tar.gz -C /tftpboot/nfsroot/arch_rootfs
     ```
+
 ## The First Boot
 After the SD card is prepared and the NFS root is set up, insert the SD card into the board and power it on. At the boot process hit any key to stop autoboot and enter the U-Boot CLI. U-Boot command line interface (CLI) will be displayed on the terminal. The U-Boot CLI can be used to set up the environment variables for the boot NFS root file system and other configurations.
 ### U-Boot CLI
@@ -597,6 +600,7 @@ Or reset the device with the following command:
 ```u-boot
 reset
 ```
+
 ## Setup Petalinux
 After the PetaLinux system boots up, the following steps can be taken to set up the PetaLinux environment.
 ### Configure .bashrc
@@ -853,3 +857,55 @@ This simle **Block Design** includes following blocks:
     * ***axi_interconnect_0_M02_AXI***
     * ***axi_interconnect_0_M03_AXI***
  
+## Glossary
+| Abbreviation  | Definition                            |
+| ------------- | ------------------------------------- |
+| **A**         |                                       |
+| **ALARM**     | Arch Linux ARM                        |
+| **AXI**       | Advanced eXtensible Interface         |
+| **B**         |                                       |
+| **BASH**      | Bourne Again Shell                    |
+| **BB**        | BitBake                               |
+| **BD**        | Block Design                          |
+| **BRAM**      | Block RAM                             |
+| **BSCAN**     | Boundary Scan                         |
+| **C**         |                                       |
+| **CLI**       | Command Line Interface                |
+| **F**         |                                       |
+| **FPGA**      | Field-Programmable Gate Array         |
+| **FSBL**      | First Stage Boot Loader               |
+| **I**         |                                       |
+| **ILA**       | Integrated Logic Analyzer             |
+| **IP**        | Intellectual Property                 |
+| **J**         |                                       |
+| **JTAG**      | Joint Test Action Group               |
+| **M**         |                                       |
+| **MPSoC**     | Multi-Processor System on Chip        |
+| **N**         |                                       |
+| **NFS**       | Network File System                   |
+| **P**         |                                       |
+| **PL**        | Programmable Logic                    |
+| **PLNX**      | PetaLinux                             |
+| **PMUFW**     | Platform Management Unit Firmware     |
+| **PS**        | Processing System                     |
+| **R**         |                                       |
+| **RPT**       | Remote Peripheral Testing             |
+| **S**         |                                       |
+| **SD**        | Secure Digital                        |
+| **SDHCI**     | Secure Digital Host Controller        |
+| **SH**        | Shell                                 |
+| **SHELL**     | Command Line Interpreter              |
+| **SoC**       | System on Chip                        |
+| **T**         |                                       |
+| **TFTP**      | Trivial File Transfer Protocol        |
+| **U**         |                                       |
+| **U-Boo**     | Universal Boot                        |
+| **V**         |                                       |
+| **VM**        | Virtual Machine                       |
+| **W**         |                                       |
+| **WP**        | Write Protect                         |
+| **X**         |                                       |
+| **XDC**       | Xilinx Design Constraints             |
+| **XLNX**      | Xilinx                                |
+| **XSA**       | Xilinx Support Archive                |
+| **XVC**       | Xilinx Virtual Cable                  |

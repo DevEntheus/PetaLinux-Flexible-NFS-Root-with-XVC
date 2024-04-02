@@ -4,6 +4,7 @@
         "bindir",
         "bootable",
         "bootargs",
+        "Bootloader",
         "bootloading",
         "BSCAN",
         "CHKSUM",
