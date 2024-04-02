@@ -491,7 +491,7 @@ sudo modprobe xvc-driver
 ### Start XVC Server
 To start the XVC server, run the following command:
 ```bash
-sudo xvcServer &
+sudo xvcserver &
 ```
 
 ## Remote Peripheral Testing (RPT)
