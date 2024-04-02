@@ -13,6 +13,8 @@
         "fsbl",
         "JTAG",
         "Milli",
+        "Miniforge",
+        "neovim",
         "nfsroot",
         "nfsrootpath",
         "nfsvers",
