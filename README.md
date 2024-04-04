@@ -66,7 +66,7 @@
 ## Introduction
 **Overview of the Project: Configuring PetaLinux with NFS Root File System and XVC**
 
-Embedded systems landscape, the seamless integration of hardware and software components are vital for efficient development and deployment. This project aims to streamline the process by configuring a **PetaLinux** system with an **NFS (Network File System) root file system** and integrating **XVC (Xilinx Virtual Cable)** for remote debugging capabilities. Below is an overview of the project's key components and objectives:
+In embedded systems seamless integration of hardware and software components is vital for efficient development and deployment. This project aims to streamline the process by configuring a **PetaLinux** system with an **NFS (Network File System) root file system** and integrating **XVC (Xilinx Virtual Cable)** for remote debugging capabilities. Below is an overview of the project's key components and objectives:
 
 **NFS Root File System:**
 
