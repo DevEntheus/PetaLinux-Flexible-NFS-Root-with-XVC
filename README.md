@@ -66,36 +66,36 @@
 ## Introduction
 **Overview of the Project: Configuring PetaLinux with NFS Root File System and XVC**
 
-Embedded systems landscape, the seamless integration of hardware and software components is vital for efficient development and deployment. This project aims to streamline the process by configuring a PetaLinux system with an NFS (Network File System) root file system and integrating XVC (Xilinx Virtual Cable) for remote debugging capabilities. Below is an overview of the project's key components and objectives:
+Embedded systems landscape, the seamless integration of hardware and software components are vital for efficient development and deployment. This project aims to streamline the process by configuring a **PetaLinux** system with an **NFS (Network File System) root file system** and integrating **XVC (Xilinx Virtual Cable)** for remote debugging capabilities. Below is an overview of the project's key components and objectives:
 
 **NFS Root File System:**
 
-* Purpose: NFS serves as a distributed file system protocol, enabling network-based access to files and directories.
-* Objective: To set up a PetaLinux system with NFS as the root file system, providing centralized storage and simplified maintenance.
+* Purpose: **NFS** serves as a distributed file system protocol, enabling network-based access to files and directories.
+* Objective: To set up a PetaLinux system with **NFS** as the root file system, providing centralized storage and simplified maintenance.
 * Benefits: Centralized management, easy updates, and the ability to boot embedded devices directly from a network-shared file system.
 
 **XVC (Xilinx Virtual Cable):**
 
-* Purpose: XVC facilitates remote debugging and monitoring of FPGA or SoC devices without the need for physical JTAG cables.
-* Objective: Integration of XVC into the PetaLinux project to enable remote debugging capabilities.
+* Purpose: **XVC** facilitates remote debugging and monitoring of **FPGA** or **SoC** devices without the need for physical **JTAG** cables.
+* Objective: Integration of **XVC** into the **PetaLinux** project to enable remote debugging capabilities.
 * Benefits: Flexible debugging workflows, real-time monitoring of internal signals, and enhanced efficiency in hardware-software co-design.
 
 **Project Setup Steps:**
 
-* TFTP and NFS Server Configuration: Installation and configuration of TFTP and NFS servers to facilitate file sharing and system booting.
-* NFS Root File System Preparation: Creation of a robust NFS root file system with proper permissions and configurations for seamless access.
-* XVC Integration: Incorporation of XVC driver and server components into the PetaLinux project for remote debugging purposes.
-* Hardware Configuration: Setup of debug bridges and ILA cores within the hardware design for real-time monitoring and debugging capabilities.
+* **TFTP** and **NFS** Server Configuration: Installation and configuration of **TFTP** and **NFS** servers to facilitate file sharing and system booting.
+* **NFS Root File System** Preparation: Creation of a robust **NFS** root file system with proper permissions and configurations for seamless access.
+* **XVC** Integration: Incorporation of **XVC** driver and server components into the **PetaLinux** project for remote debugging purposes.
+* Hardware Configuration: Setup of debug bridges and System **ILA** within the hardware design for real-time monitoring and debugging capabilities.
 
 **Objectives:**
 
 * Establishing a comprehensive development environment conducive to efficient hardware-software co-design and debugging processes.
-* Enabling remote debugging capabilities through the integration of XVC, enhancing flexibility and scalability in the development workflow.
-* Streamlining file system management and access by configuring NFS as the root file system, promoting centralized storage and simplified maintenance.
+* Enabling remote debugging capabilities through the integration of **XVC**, enhancing flexibility and scalability in the development workflow.
+* Streamlining file system management and access by configuring **NFS** as the root file system, promoting centralized storage and simplified maintenance.
 
 **Conclusion:**
 
-* By following the outlined steps and configurations, can create a robust PetaLinux environment with NFS as the root file system and integrated XVC for remote debugging. This setup empowers with enhanced flexibility, scalability, and efficiency in designing and debugging FPGA or SoC-based applications, ultimately accelerating the development cycle and improving overall productivity.
+* By following the outlined steps and configurations, one can create a robust PetaLinux environment with **NFS** as the root file system and integrated **XVC** for remote debugging. This setup empowers with enhanced flexibility, scalability, and efficiency in designing and debugging **FPGA** or **SoC**-based applications, ultimately accelerating the development cycle and improving overall productivity.
 
 ## Overview
 The project aims to configure a **PetaLinux system** with an **NFS root file system** and integrate **XVC** for remote debugging capabilities of **FPGA** or **SoC** devices. It involves creating a **Virtual Machine (VM) with Ubuntu 22.04.2 LTS**, installing and configuring **TFTP** and **NFS** servers, setting up **PetaLinux Tools 2023.2**, creating a **PetaLinux project**, preparing the block design using **Xilinx Vivado 2023.2.1**, configuring the root file system, integrating **XVC** for remote debugging, and preparing the **SD card** and **NFS root** for booting the system. Additionally, the project includes setting up **FPGA Manager** and **Hardware Manager** for configuring the bitstream and monitoring the hardware interfaces, aiming to streamline the development and debugging process by providing a flexible and efficient environment for hardware-software co-design and debugging workflows.
