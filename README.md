@@ -130,7 +130,7 @@ sudo apt update
 ```
 #### **Don't UPGRADE the packages!**
 
-Copy "[plnx-env-setup.sh](PetlaLinux_Tools/plnx-env-setup.sh)" to the home directory and run the following command to install the required packages:
+Copy ***"[plnx-env-setup.sh](PetlaLinux_Tools/plnx-env-setup.sh)"*** to the home directory and run the following command to install the required packages:
 ```bash
 sudo ~/plnx-env-setup.sh
 ```
