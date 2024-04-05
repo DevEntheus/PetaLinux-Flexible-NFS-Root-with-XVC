@@ -843,7 +843,9 @@ This simle **Block Design** includes following blocks:
     * ***axi_interconnect_0_M01_AXI***
     * ***axi_interconnect_0_M02_AXI***
     * ***axi_interconnect_0_M03_AXI***
- 
+### Address Map
+![Address map](Images/addr_map.jpg "Address map") 
+
 ## Glossary
 | Abbreviation  | Definition                            |
 | ------------- | ------------------------------------- |
