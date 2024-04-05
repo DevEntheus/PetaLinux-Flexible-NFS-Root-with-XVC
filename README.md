@@ -610,7 +610,7 @@ sudo nano ~/.bashrc
 ```
 Clear the file and add the following:
 ```text
-# ~/.bashrc: executed by bash(1) for non-login shells.i
+# ~/.bashrc: executed by bash(1) for non-login shells.
 # see /usr/share/doc/bash/examples/startup-files (in the package bash-doc)
 # for examples
 
@@ -726,19 +726,6 @@ if ! shopt -oq posix; then
   elif [ -f /etc/bash_completion ]; then
     . /etc/bash_completion
   fi
-fi
-
-# >>> conda initialize >>>
-# !! Contents within this block are managed by 'conda init' !!
-__conda_setup="$('/home/vtuser/miniforge3/bin/conda' 'shell.bash' 'hook' 2> /dev/null)"
-if [ $? -eq 0 ]; then
-    eval "$__conda_setup"
-else
-    if [ -f "/home/vtuser/miniforge3/etc/profile.d/conda.sh" ]; then
-        . "/home/vtuser/miniforge3/etc/profile.d/conda.sh"
-    else
-        export PATH="/home/vtuser/miniforge3/bin:$PATH"
-    fi
 fi
 ```
 ### DNF Update
