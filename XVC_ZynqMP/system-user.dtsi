@@ -1,8 +1,5 @@
 /include/ "system-conf.dtsi"
 / {
-    chosen {
-        bootargs = "console=ttyPS0,115200 root=/dev/nfs nfsroot=<NFS Server IP>:/tftpboot/nfsroot/plnx_rootfs,tcp,nfsvers=4 ip=dhcp rw";
-	}:
 };
 
 &sdhci0 {
