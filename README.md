@@ -71,7 +71,7 @@ In embedded systems seamless integration of hardware and software components is 
 **NFS Root File System:**
 
 * Purpose: **NFS** serves as a distributed file system protocol, enabling network-based access to files and directories.
-* Objective: To set up a PetaLinux system with **NFS** as the root file system, providing centralized storage and simplified maintenance.
+* Objective: To set up a **PetaLinux** system with **NFS** as the root file system, providing centralized storage and simplified maintenance.
 * Benefits: Centralized management, easy updates, and the ability to boot embedded devices directly from a network-shared file system.
 
 **XVC (Xilinx Virtual Cable):**
@@ -95,7 +95,7 @@ In embedded systems seamless integration of hardware and software components is 
 
 **Conclusion:**
 
-* By following the outlined steps and configurations, one can create a robust PetaLinux environment with **NFS** as the root file system and integrated **XVC** for remote debugging. This setup empowers with enhanced flexibility, scalability, and efficiency in designing and debugging **FPGA** or **SoC**-based applications, ultimately accelerating the development cycle and improving overall productivity.
+* By following the outlined steps and configurations, one can create a robust **PetaLinux** environment with **NFS** as the root file system and integrated **XVC** for remote debugging. This setup empowers with enhanced flexibility, scalability, and efficiency in designing and debugging **FPGA** or **SoC**-based applications, ultimately accelerating the development cycle and improving overall productivity.
 
 ## Overview
 The project aims to configure a **PetaLinux system** with an **NFS root file system** and integrate **XVC** for remote debugging capabilities of **FPGA** or **SoC** devices. It involves creating a **Virtual Machine (VM) with Ubuntu 22.04.2 LTS**, installing and configuring **TFTP** and **NFS** servers, setting up **PetaLinux Tools 2023.2**, creating a **PetaLinux project**, preparing the block design using **Xilinx Vivado 2023.2.1**, configuring the root file system, integrating **XVC** for remote debugging, and preparing the **SD card** and **NFS root** for booting the system. Additionally, the project includes setting up **FPGA Manager** and **Hardware Manager** for configuring the bitstream and monitoring the hardware interfaces, aiming to streamline the development and debugging process by providing a flexible and efficient environment for hardware-software co-design and debugging workflows.
@@ -271,7 +271,7 @@ mkdir -p ~/Xilinx/petalinux/2023.2
 chmod +x ~/<petalinux_installer>.run
 ```
 ### Install the PetaLinux Tools
-Run the installer. The PetaLinux tools need to be installed as non-root users:
+Run the installer. The **PetaLinux tools** need to be installed as non-root users:
 ```bash
 ./<petalinux_installer>.run -d ~/Xilinx/petalinux/2023.2
 ```
@@ -304,12 +304,12 @@ After the **Block Design** completion, validate the design implementation and ge
 
 ## PetaLinux Project
 ### Create a PetaLinux Project
-Create a new PetaLinux project with the following command:
+Create a new **PetaLinux** project with the following command:
 ```bash
 petalinux-create --type project --template zynqMP --name <project name>
 ```
 ### Device Tree Configuration
-To use Debug Bridge, change the **system-user.dtsi** device tree at the end of the file of the PetaLinux project in **<plnx-proj-root>/project-spec/meta-user/recipes-bsp/device-tree/files** to change the compatible string to match that driver.
+To use Debug Bridge, change the **system-user.dtsi** device tree at the end of the file of the **PetaLinux** project in **<plnx-proj-root>/project-spec/meta-user/recipes-bsp/device-tree/files** to change the compatible string to match that driver.
 ```text
 &sdhci0 {
        no-1-8-v;
@@ -322,7 +322,7 @@ To use Debug Bridge, change the **system-user.dtsi** device tree at the end of t
 };
 ```
 ### Hardware Configuration
-Use the following command to import the hardware platform into the PetaLinux project:
+Use the following command to import the hardware platform into the **PetaLinux** project:
 ```bash
 petalinux-config --get-hw-description ~/<hardware_platform>.xsa
 ```
@@ -369,14 +369,14 @@ Configure the root file system as follows:
         (vtuser)    
 ```
 ### Kernel configuration
-Check kernel Configuration in accordance with PetaLinux Tools Documentation: [PetaLinux Tools Documentation: Reference Guide "Configuring NFS Boot"](https://docs.amd.com/r/en-US/ug1144-petalinux-tools-reference-guide/Configuring-NFS-Boot) section.
+Check kernel Configuration in accordance with **PetaLinux** Tools Documentation: [PetaLinux Tools Documentation: Reference Guide "Configuring NFS Boot"](https://docs.amd.com/r/en-US/ug1144-petalinux-tools-reference-guide/Configuring-NFS-Boot) section.
 ### Build PetaLinux Project
-To build the PetaLinux project, run the following command:
+To build the **PetaLinux** project, run the following command:
 ```bash
 petalinux-build
 ```
 ### Packaging a Petalinux Project
-To package the PetaLinux project, run the following command:
+To package the **PetaLinux** project, run the following command:
 ```bash
 petalinux-package --boot --format BIN --fsbl images/linux/zynqmp_fsbl.elf --u-boot images/linux/u-boot.elf --pmufw images/linux/pmufw.elf --fpga images/linux/system.bit --force
 ```
@@ -393,13 +393,13 @@ Add the **Debug Bridge** to the Block Design, as shown in the ***[Block Design E
 After the **Block Design** completion, validate the design implementation and generate the bitstream. Export the hardware platform including the bitstream. Copy the hardware platform to the **Ubuntu 22.04.2 VM** home directory.
 ### Edit Petalinux Project
 #### Device Tree Configuration
-To use Debug Bridge, change the **system-user.dtsi** device tree at the end of the file of the PetaLinux project in **<plnx-proj-root>/project-spec/meta-user/recipes-bsp/device-tree/files** to change the compatible string to match that driver.
+To use Debug Bridge, change the **system-user.dtsi** device tree at the end of the file of the **PetaLinux** project in **<plnx-proj-root>/project-spec/meta-user/recipes-bsp/device-tree/files** to change the compatible string to match that driver.
 ```text
 &debug_bridge_0 {
         compatible = "xlnx,xvc";
 };
 ```
-Use the following command to import the hardware platform into the PetaLinux project to configure the XVC driver:
+Use the following command to import the hardware platform into the **PetaLinux** project to configure the XVC driver:
 ```bash
 petalinux-config --get-hw-description ~/<hardware_platform>.xsa
 ```
@@ -446,7 +446,7 @@ petalinux-build -c kernel
 ```bash
 petalinux-build -c xvc-driver
 ```
-Also need to rebuild PetaLinux bootable images run this command:
+Also need to rebuild **PetaLinux** bootable images run this command:
 ```bash
 petalinux-build -c rootfs
 ```
@@ -480,7 +480,7 @@ To build xvcserver application, run the following command:
 ```bash
 petalinux-build -c xvcserver
 ```
-Build the PetaLinux project with the following command:
+Build the **PetaLinux** project with the following command:
 ```bash
 petalinux-build
 ```
@@ -524,12 +524,12 @@ To build rptserver application, run the following command:
 ```bash
 petalinux-build -c rptserver
 ```
-Also, it is necessary to rebuild PetaLinux bootable images. To do this, run the following:
+Also, it is necessary to rebuild **PetaLinux** bootable images. To do this, run the following:
 ```bash
 petalinux-build -c rootfs
 ```
 
-Then, build the PetaLinux project with the following command:
+Then, build the **PetaLinux** project with the following command:
 ```bash
 petalinux-build
 ```
@@ -574,7 +574,7 @@ Or for example **ArchLinuxARM aarch64 root file system** can be used with the fo
     ```
 
 ## The First Boot
-After the SD card is prepared and the NFS root is set up, insert the SD card into the board and power it on. At the boot process hit any key to stop autoboot and enter the U-Boot CLI. U-Boot command line interface (CLI) will be displayed on the terminal. The U-Boot CLI can be used to set up the environment variables for the boot NFS root file system and other configurations.
+After the **SD card** is prepared and the **NFS** root is set up, insert the **SD card** into the board and power it on. At the boot process hit any key to stop autoboot and enter the **U-Boot CLI**. **U-Boot** command line interface (CLI) will be displayed on the terminal. The **U-Boot CLI** can be used to set up the environment variables for the boot **NFS root file system** and other configurations.
 ### U-Boot CLI
 To help using the U-Boot CLI, use the following command:
 ```u-boot
@@ -602,7 +602,7 @@ reset
 ```
 
 ## Setup Petalinux
-After the PetaLinux system boots up, the following steps can be taken to set up the PetaLinux environment.
+After the **PetaLinux** system boots up, the following steps can be taken to set up the **PetaLinux** environment.
 ### Configure .bashrc
 Edit the **.bashrc** file:
 ```bash
@@ -829,7 +829,7 @@ The Hardware Integrated Logic Analyzer (ILA) is a debug core that allows you to 
 ![Hardware ILA](Images/ila.jpg "Hardware ILA")
 
 ## Example of Block Design
-Block Design Example used for testing the PetaLinux system with NFS Root and XVC integration
+Block Design Example used for testing the **PetaLinux system with NFS Root and XVC integration
 ![Block design example](Images/bd.jpg "Block design example")
 This simle **Block Design** includes following blocks:
 * **Zynq UltraScale+ MPSoC**
