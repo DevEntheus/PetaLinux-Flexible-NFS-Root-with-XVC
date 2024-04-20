@@ -62,7 +62,6 @@
 18. [Example of Block Design](#example-of-block-design)
 19. [Glossary](#glossary)
 
-
 ## Introduction
 **Overview of the Project: Configuring PetaLinux with NFS Root File System and XVC**
 
@@ -557,7 +556,7 @@ For example, to use a **PetaLinux root file system** created for this project wi
     ```
 * Extract the root file system with the following command:
     ```bash
-    sudo tar -xfvp ~/<Project_Name>/images/linux/rootfs.tar.gz -C /tftpboot/nfsroot/plnx_rootfs
+    sudo tar xfvp ~/<Project_Name>/images/linux/rootfs.tar.gz -C /tftpboot/nfsroot/plnx_rootfs
     ```
 Or for example **ArchLinuxARM aarch64 root file system** can be used with the following steps:
 * Download the latest Arch Linux ARM to the home directory:
@@ -570,7 +569,7 @@ Or for example **ArchLinuxARM aarch64 root file system** can be used with the fo
     ```
 * Extract the root file system with the following command:
     ```bash
-    sudo tar -xfvp ~/ArchLinuxARM-aarch64-latest.tar.gz -C /tftpboot/nfsroot/arch_rootfs
+    sudo tar xfvp ~/ArchLinuxARM-aarch64-latest.tar.gz -C /tftpboot/nfsroot/arch_rootfs
     ```
 
 ## The First Boot
