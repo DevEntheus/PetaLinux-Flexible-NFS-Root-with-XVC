@@ -109,7 +109,7 @@ The project aims to configure a **PetaLinux system** with an **NFS root file sys
 * System shell **/bin/bash** or **/bin/sh**
 
 ### Install the required packages
-Before installing the **PetaLinux Tools**, ensure that the required packages are installed on the **Ubuntu 22.04.2 VM**. Change the system shell to **/bin/bash** or **/bin/sh** if necessary.
+Before installing the **PetaLinux Tools**, ensure that the required packages are installed on the **Ubuntu 22.04.2 VM**. Change the system shell to **/bin/bash**.
 
 Check the current shell:
 ```bash
