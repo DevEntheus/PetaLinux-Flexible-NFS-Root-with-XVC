@@ -1,5 +1,6 @@
 {
     "cSpell.words": [
+        "aarch",
         "autoboot",
         "bindir",
         "bootable",
@@ -24,6 +25,7 @@
         "plnx",
         "pmufw",
         "printenv",
+        "rootfs",
         "rptserver",
         "runmake",
         "saveenv",
@@ -34,6 +36,7 @@
         "tftpboot",
         "tftpd",
         "WORKDIR",
+        "xfvp",
         "xvcserver",
         "zynqmp"
     ]

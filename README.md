@@ -759,19 +759,11 @@ If you'd prefer that conda's base environment not be activated on startup,
 ```bash
 conda config --set auto_activate_base False
 ```
-You can undo this by running:
-```bash
-`conda init --reverse $SHELL`? [yes|no]
-```
 To activate conda's base environment in your current shell session:
 ```bash
 eval "$(/home/vtuser/miniforge3/bin/conda shell.YOUR_SHELL_NAME hook)"
 ```
-* **YOUR_SHELL_NAME** - The name of your shell (e.g., **sh**, **bash**)
-To install conda's shell functions for easier access, first activate, then:
-```bash
-conda init
-```
+* **YOUR_SHELL_NAME** - The name of your shell (e.g., **bash**)
 ### Update conda in base environment
 ```bash
 conda update --name base conda
